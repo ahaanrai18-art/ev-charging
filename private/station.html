@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station Details - EV ChargeX</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header class="header-container">
+        <div class="logo-group">
+            <a href="index.html" class="header-btn"><i data-lucide="arrow-left"></i> Back to Stations</a>
+        </div>
+        <div class="logo-group">
+            <i data-lucide="zap" class="logo-icon"></i>
+            <h1>Station Details</h1>
+        </div>
+        <button id="myBookingsBtn" class="header-btn" onclick="openMyBookingsModal()">
+            <i data-lucide="calendar"></i>
+            <span>My Bookings</span>
+            <span id="bookingBadge" class="badge badge-available hidden">0</span>
+        </button>
+    </header>
+
+    <!-- Details Container -->
+    <main class="detail-container">
+        <div id="station-details"></div>
+    </main>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i data-lucide="zap"></i> <span id="modalStationTitle">Book Charging Slot</span></h3>
+                <button class="close-btn" onclick="closeBookingModal()"><i data-lucide="x"></i></button>
+            </div>
+            <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+                <input type="hidden" id="bookStationId">
+                <input type="hidden" id="bookChargingType">
+
+                <div class="form-group">
+                    <label for="userName">Full Name *</label>
+                    <input type="text" id="userName" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="e.g. 9876543210" required pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" class="form-control" placeholder="rahul@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vehicleModel">EV Model *</label>
+                        <input type="text" id="vehicleModel" class="form-control" placeholder="e.g. Tata Nexon EV" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleNumber">Vehicle Registration No. *</label>
+                        <input type="text" id="vehicleNumber" class="form-control" placeholder="e.g. KA 01 AB 1234" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookingDate">Date *</label>
+                        <input type="date" id="bookingDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingTime">Time Slot *</label>
+                        <input type="time" id="bookingTime" class="form-control" required>
+                    </div>
+                </div>
+
+                <div id="bookingFormError" class="badge badge-busy hidden" style="width: 100%; text-align: center; margin-bottom: 12px; font-size: 0.9rem; padding: 8px;"></div>
+
+                <div class="card-actions mt-20">
+                    <button type="button" class="btn-secondary" onclick="closeBookingModal()">Cancel</button>
+                    <button type="submit" id="submitBookingBtn" class="btn-primary">
+                        <i data-lucide="check-circle"></i> Confirm & Book Slot
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Booking Confirmation Receipt Modal -->
+    <div id="confirmationModal" class="modal-overlay">
+        <div class="modal-card text-center">
+            <div class="confirmation-box">
+                <div class="success-icon"><i data-lucide="check-circle"></i></div>
+                <h3 style="font-size: 1.4rem; color: var(--text-main);">Slot Booked Successfully!</h3>
+                <p style="color: var(--text-muted); margin-top: 5px;">Your EV charging slot reservation is confirmed.</p>
+
+                <div class="receipt-details" id="receiptContent">
+                    <!-- Receipt rendered dynamically -->
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn-secondary" onclick="closeConfirmationModal()">Close</button>
+                    <button class="btn-primary" onclick="closeConfirmationModal(); openMyBookingsModal();">
+                        <i data-lucide="calendar"></i> View All Bookings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Bookings Modal -->
+    <div id="myBookingsModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i data-lucide="calendar"></i> My Charging Bookings</h3>
+                <button class="close-btn" onclick="closeMyBookingsModal()"><i data-lucide="x"></i></button>
+            </div>
+            <div id="myBookingsList">
+                <!-- Bookings rendered dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="station-details.js"></script>
+
+</body>
+
+</html>
